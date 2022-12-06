@@ -191,9 +191,34 @@ router.get('/all-products-data', async(req, res) =>{
     res.send(productData).status(200)
   } catch (err) {
     console.error(err.message)
-    res.status(401)
+    res.status()
   }
 })
+
+
+router.get('/products-data/:category', async(req, res) =>{
+  // const {category} = req.body
+  try {
+    const productData = (await pool.query(`select * from products where category='${req.params.category}'`)).rows
+    res.send(productData).status(200)
+    // console.log(productData)
+  } catch (err) {
+    console.error(err.message)
+    res.status()
+  }
+})
+
+// router.get('/get-individual-product-data/:id', async(req, res) =>{
+//   const {id} = req.params
+//   try {
+//     const singleProductData = (await pool.query(`select * from products where id=${id}`)).rows
+//     res.send(singleProductData).status(200);
+//     // console.log(singleProductData)
+//   } catch (error) {
+//     console.error(err.message)
+//     res.status(402)
+//   }
+// })
 
 router.post("/verify", authorize, (req, res) => {
   try {
